@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Intersections</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    .signal-bar span {
+      display: inline-block;
+      width: 100px; padding: 8px; margin-right: 5px;
+      color: white; font-weight: bold; text-align: center; border-radius: 5px;
+    }
+    .green { background: green; }
+    .yellow { background: orange; }
+    .red { background: red; }
+
+    .btn-custom {
+      transition: all 0.3s ease;
+    }
+    .btn-custom:hover {
+      transform: scale(1.05);
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+    }
+
+    /* New styling for intersection image */
+    .intersection-img {
+      background: #f1f9ff;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .intersection-img img {
+      max-height: 350px;
+    }
+
+    /* Toggle switch styling */
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 70px;
+      height: 34px;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #0d6efd; /* AUTO default blue */
+      transition: .4s;
+      border-radius: 34px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px; width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #dc3545; /* MANUAL red */
+    }
+    input:checked + .slider:before {
+      transform: translateX(36px);
+    }
+
+    /* Labels inside the switch */
+    .slider::after {
+      content: "AUTO";
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      position: absolute;
+      right: 8px;
+      top: 7px;
+    }
+    input:checked + .slider::after {
+      content: "MAN";
+      left: 8px;
+      right: auto;
+    }
+  </style>
+</head>
+
+<body class="bg-light">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="/">🚦 Smart Traffic</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="/">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link active fw-bold" href="/intersections">Intersections</a></li>
+          <li class="nav-item"><a class="nav-link" href="/historical">Historical Data</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Main Content -->
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between mb-3 align-items-center">
+      <h3 class="fw-bold">SMART TRAFFIC MANAGEMENT SYSTEM</h3>
+      <!-- Toggle Switch -->
+      <label class="toggle-switch">
+        <input type="checkbox" id="modeToggle">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="row">
+      <!-- Left intersection graphic -->
+      <div class="col-md-7">
+        <div class="card p-3 text-center shadow-sm intersection-img">
+          <img src="https://cdn-icons-png.flaticon.com/512/1995/1995574.png"
+               alt="intersection" class="img-fluid mb-3">
+          <div class="signal-bar">
+            <span class="green">30s</span>
+            <span class="yellow">45s</span>
+            <span class="red">50s</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right intersection data -->
+      <div class="col-md-5">
+        <div class="card p-3 mb-3 shadow-sm">
+          <h5 class="fw-bold mb-3">INTERSECTION DATA</h5>
+          <p>Current Vehicles: <%= currentVehicles %></p>
+          <p>Predicted Vehicles: <%= predictedVehicles %></p>
+          <p>Current Phase: <%= currentPhase %></p>
+          <p>Recommended Duration: <%= duration %>s</p>
+          <button class="btn btn-primary w-100 btn-custom mb-2">
+            <i class="bi bi-sliders"></i> Manual Control
+          </button>
+        </div>
+        <button class="btn btn-success w-100 btn-custom">
+          <i class="bi bi-lightbulb"></i> Change to Green
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Toggle listener
+    const modeToggle = document.getElementById("modeToggle");
+    modeToggle.addEventListener("change", () => {
+      if (modeToggle.checked) {
+        alert("Switched to MANUAL mode");
+      } else {
+        alert("Switched to AUTO mode");
+      }
+    });
+  </script>
+</body>
+</html>
