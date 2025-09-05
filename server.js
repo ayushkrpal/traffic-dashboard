@@ -59,9 +59,9 @@ io.on("connection", (socket) => {
 
 
 // Connect to MongoDB
-mongoose.connect("mongodb://127.0.0.1:27017/traffic")
-  .then(() => console.log("Connected to MongoDB"))
-  .catch(err => console.error("MongoDB connection error:", err));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log(err));
 
 
 // ---------------- Routes ----------------
@@ -108,6 +108,7 @@ app.get("/intersections", (req, res) => {
 });
 
 // ---------------- Start Server ----------------
-server.listen(3000, () => {
-  console.log("Server running at http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
