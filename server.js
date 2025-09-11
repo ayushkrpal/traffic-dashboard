@@ -90,6 +90,9 @@ app.get("/comingsoon", (req, res) => {
   res.render("comingsoon");
 });
 
+app.get("/about", (req, res) => {
+  res.render("about");
+});
 
 
 const PORT = process.env.PORT || 3000;
