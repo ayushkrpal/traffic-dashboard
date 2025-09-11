@@ -1,81 +1,25 @@
-const socket = io();   // connects to same origin http://localhost:3000
 
-socket.on("connect", () => {
-  console.log("Connected to server with ID:", socket.id);
-});
-
-socket.on("disconnect", () => {
-  console.log("Disconnected from server");
-});
-
-const map = L.map("map").setView([22.3175, 87.3072], 15);
+//We are making the map here for our index page
+const map = L.map("map").setView([22.3175, 87.3072], 16);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: "SIH PROJECT",
 }).addTo(map);
 
-// const markers = {};
-// let myMarker;  // store your own marker
-
-// // =============================
-// // Geolocation tracking
-// // =============================
-// if (navigator.geolocation) {
-//   navigator.geolocation.watchPosition(
-//     (position) => {
-//       const { latitude, longitude } = position.coords;
-
-//       // emit to server
-//       socket.emit("send-location", { latitude, longitude });
-
-//       // center map on my location
-//       map.setView([latitude, longitude], 16);
-
-//       // add/update my own marker
-//       if (myMarker) {
-//         myMarker.setLatLng([latitude, longitude]);
-//       } else {
-//         myMarker = L.marker([latitude, longitude]).addTo(map)
-//           .bindPopup("I am here")
-//           .openPopup();
-//       }
-//     },
-//     (err) => {
-//       console.error(err);
-//     },
-//     {
-//       enableHighAccuracy: true,
-//       timeout: 5000,
-//       maximumAge: 0,
-//     }
-//   );
-// }
-
-// // =============================
-// // Handle other users
-// // =============================
-// socket.on("receive-location", (data) => {
-//   const { id, latitude, longitude } = data;
-//   if (id === socket.id) return; // skip own marker
-
-//   if (markers[id]) {
-//     markers[id].setLatLng([latitude, longitude]);
-//   } else {
-//     markers[id] = L.marker([latitude, longitude]).addTo(map)
-//       .bindPopup(`User: ${id}`);
-//   }
-// });
-
+//We have added 10 demo markers or possible traffic intersections in our map
 const intersections = [
-  { lat: 22.317274, lng: 87.307176, name: "Intersection A", info: "Heavy Traffic" },
-  { lat: 22.319809, lng: 87.308615, name: "Intersection B", info: "Smooth Flow" },
-  { lat: 22.316756, lng: 87.304559, name: "Intersection C", info: "Moderate Traffic" },
-  { lat: 22.320900, lng: 87.305800, name: "Intersection D", info: "Construction Zone" },
-  { lat: 22.322400, lng: 87.310200, name: "Intersection E", info: "Busy Crossroad" },
-  { lat: 22.318200, lng: 87.311500, name: "Intersection F", info: "Clear Road" },
-  { lat: 22.314800, lng: 87.309200, name: "Intersection G", info: "Traffic Jam" },
-  { lat: 22.315900, lng: 87.306000, name: "Intersection H", info: "Signalized" }
+  { lat: 22.319797, lng: 87.308679, name: "Intersection C", info: "Moderate Traffic" },
+  { lat: 22.319221, lng: 87.303504, name: "Intersection D", info: "Construction Zone" },
+  { lat: 22.318636, lng:  87.301205, name: "Intersection E", info: "Busy Crossroad" },
+  { lat: 22.317333, lng: 87.300851, name: "Intersection G", info: "Traffic Jam" },
+  { lat: 22.316705, lng: 87.301278, name: "Intersection H", info: "Signalized" },
+  { lat:22.317121, lng:87.307145, name:"Intersection M",info:"Light traffic"},
+  { lat: 22.3158056, lng: 87.3008333, name: "Intersection A", info: "Light traffic" },
+  { lat: 22.3172222, lng: 87.2995,    name: "Intersection B", info: "Light traffic" },
+  { lat: 22.3210833, lng: 87.3071389, name: "Intersection C", info: "Light traffic" },
+  { lat: 22.3195278, lng: 87.3056667, name: "Intersection D", info: "Light traffic" },
 ];
+
 
 
 

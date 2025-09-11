@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coming Soon</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f0f0f;
+      color: #eaeaea;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+    .container {
+      max-width: 600px;
+      padding: 30px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #1c1c1c, #222);
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: #84d1c2;
+      text-shadow: 0 0 15px rgba(0, 255, 204, 0.7);
+    }
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #bbb;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 25px;
+      border-radius: 25px;
+      background: #00ffcc;
+      color: #111;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      background: #00cca3;
+      transform: scale(1.05);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Coming Soon</h1>
+    <p>More to come<br>Stay tuned for updates</p>
+    <a href="/" class="btn">⬅ Back to Home</a>
+  </div>
+</body>
+</html>

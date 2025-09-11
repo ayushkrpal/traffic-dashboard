@@ -1,19 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const intersectionSchema = new mongoose.Schema({
-  id: Number,          // or mongoose.Schema.Types.ObjectId
-  name: String,
-  lat: Number,
-  lng: Number,
-  status: {
-    type: String,
-    enum: ['normal','busy','congested','critical','offline','unknown'],
-    default: 'unknown'
-  },
-  volume: Number,
-  avgDelay: Number
+  id: { type: Number, required: true, unique: true },
+  name: { type: String, required: true },
+  lat: { type: Number, required: true },
+  lng: { type: Number, required: true },
+  status: { type: String, enum: ["normal", "congested", "busy", "jammed"], default: "normal" },
+  volume: { type: Number, default: 0 },
+  avgDelay: { type: Number, default: 0 }
 });
 
-const Intersection = mongoose.model('Intersection', intersectionSchema);
-
-module.exports = Intersection;
+module.exports = mongoose.model("Intersection", intersectionSchema);

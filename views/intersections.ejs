@@ -13,24 +13,17 @@
       font-family: 'Segoe UI', sans-serif;
     }
 
-    /* Navbar */
     .navbar {
       background: #1e1e1e;
       border-bottom: 1px solid #333;
     }
-    .navbar-brand {
-      font-weight: bold;
-    }
     .nav-link {
       color: #ffffff !important;
-      transition: color 0.2s ease;
     }
     .nav-link:hover {
       color: #29c5e0 !important;
     }
-  
 
-    /* Cards */
     .card {
       background: #1c1c1c;
       border-radius: 16px;
@@ -39,164 +32,229 @@
       color: #eaeaea;
     }
 
-    
-.intersection-img {
-  height: 100%;          
-  display: flex;         
-  align-items: center;
-  justify-content: center;
-}
+    /* Intersection (cross roads) */
+    .intersection {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      background: #2b2b2b;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .vertical-road {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 100%;
+      background: #444;
+    }
+    .horizontal-road {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      height: 100px;
+      background: #444;
+    }
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 100px;
+      height: 100px;
+      background: #555;
+    }
 
-.intersection-img img {
-  width: 100%;           
-  height: 100%;         
-  object-fit: cover;     
-  border-radius: 12px;  
-  transition: transform 0.3s ease;
-}
+    /* Lights */
+    .traffic-light {
+      position: absolute;
+      width: 24px;
+      height: 72px;
+      background: #222;
+      border-radius: 6px;
+      padding: 4px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      cursor: pointer;
+    }
+    .bulb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #333;
+    }
+    .bulb.red.active { background: #ff1744; box-shadow: 0 0 8px #ff1744; }
+    .bulb.yellow.active { background: #ffc107; box-shadow: 0 0 8px #ffc107; }
+    .bulb.green.active { background: #00e676; box-shadow: 0 0 8px #00e676; }
 
-.intersection-img img:hover {
-  transform: scale(1.02); 
-}
+    /* Light positions */
+    .north-light { top: 10px; left: 50%; transform: translateX(-50%); }
+    .south-light { bottom: 10px; left: 50%; transform: translateX(-50%); }
+    .east-light { right: 10px; top: 50%; transform: translateY(-50%); }
+    .west-light { left: 10px; top: 50%; transform: translateY(-50%); }
 
-    .btn-custom {
+    /* Switch button */
+    #viewToggle {
+      font-weight: 600;
       border-radius: 10px;
-      transition: all 0.3s ease;
-      font-weight: 500;
-      color: #fff !important;
     }
-    .btn-custom:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.6);
-    }
-
-    /* Signal buttons */
-    .btn-success.active {
-      background: #00e676 !important;
-      box-shadow: 0 0 15px #00e676;
-    }
-    .btn-warning.active {
-      background: #ffc107 !important;   /* darker amber instead of bright yellow */
-      color: #000 !important;
-      box-shadow: 0 0 15px #ffc107;
-    }
-    .btn-danger.active {
-      background: #ff1744 !important;
-      box-shadow: 0 0 15px #ff1744;
-    }
-
-    #modeLabel {
-      font-weight: bold;
-    }
-    #modeLabel.text-primary { color: #00e5ff !important; }
-    #modeLabel.text-danger { color: #ff4081 !important; }
   </style>
 </head>
 
-<body>
 
+
+
+<body>
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
       <a class="navbar-brand text-info" href="/">Smart Traffic</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="/">Dashboard</a></li>
-          <li class="nav-item"><a class="nav-link" href="/intersections">Intersections</a></li>
-          <li class="nav-item"><a class="nav-link active" href="/historical">Historical Data</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/intersections">Intersections</a></li>
+          <li class="nav-item"><a class="nav-link" href="/historical">Historical Data</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Header Row -->
+  <!-- Header -->
   <div class="container mt-4">
     <div class="row align-items-center mb-4">
-      <!-- Left: Auto/Manual Toggle -->
-      <div class="col-md-3 d-flex align-items-center">
-        <div class="form-check form-switch">
-          <input class="form-check-input bg-secondary" type="checkbox" role="switch" id="modeToggle">
-          <label class="form-check-label ms-2" for="modeToggle"><span id="modeLabel" class="text-primary">AUTO</span></label>
-        </div>
-      </div>
-
-      <!-- Center: Title -->
-      <div class="col-md-6 text-center">
-        <h3 class="fw-bold m-0 text-info">SMART TRAFFIC MANAGEMENT SYSTEM</h3>
-      </div>
-
-      <!-- Right: Signal Toggle Group -->
       <div class="col-md-3">
-        <div class="btn-group w-100" role="group" aria-label="Signal Timing">
-          <button type="button" class="btn btn-success btn-custom active" data-time="30">30s</button>
-          <button type="button" class="btn btn-warning btn-custom" data-time="45">45s</button>
-          <button type="button" class="btn btn-danger btn-custom" data-time="50">50s</button>
+        <div class="form-check form-switch">
+          <input class="form-check-input bg-secondary" type="checkbox" id="modeToggle">
+          <label class="form-check-label ms-2" for="modeToggle">
+            <span id="modeLabel" class="text-primary">AUTO</span>
+          </label>
         </div>
+      </div>
+      <div class="col-md-6 text-center">
+        <h3 class="fw-bold text-info">SMART TRAFFIC MANAGEMENT SYSTEM</h3>
+      </div>
+      <div class="col-md-3 d-flex justify-content-end">
+        <button id="viewToggle" class="btn btn-outline-info">Switch to 2D Model</button>
       </div>
     </div>
 
-    <!-- Content Row -->
     <div class="row">
-      <!-- Left intersection graphic -->
-      <div class="col-md-7">
-        <div class="card p-3 text-center shadow-sm intersection-img">
-          <img src="/pic/pic1.jpg"
-               alt="intersection" class="img-fluid mb-3">
-        </div>
-      </div>
-
-      <!-- Right intersection data -->
+      <!-- Left Panel -->
       <div class="col-md-5">
-        <div class="card p-4 mb-3 shadow-sm">
+        <div class="card p-4 mb-3">
           <h5 class="fw-bold mb-3 text-info">INTERSECTION DATA</h5>
           <p>Current Vehicles: <span class="text-warning fw-bold"><%= currentVehicles %></span></p>
           <p>Predicted Vehicles: <span class="text-success fw-bold"><%= predictedVehicles %></span></p>
           <p>Current Phase: <span class="text-info fw-bold"><%= currentPhase %></span></p>
           <p>Recommended Duration: <span class="text-danger fw-bold"><%= duration %>s</span></p>
-          <a class="btn btn-outline-info w-100 btn-custom mb-2" href="/">
+          <a class="btn btn-outline-info w-100 mb-2" href="/">
             <i class="bi bi-sliders"></i> Manual Control
           </a>
         </div>
-        <button class="btn btn-success w-100 btn-custom">
-          <i class="bi bi-lightbulb"></i> Change to Green
-        </button>
+        <button class="btn btn-success w-100"><i class="bi bi-lightbulb"></i> Change to Green</button>
+      </div>
+
+      <!-- Right Panel -->
+      <div class="col-md-7">
+        <!-- Image View (Picture) -->
+        <div id="imageView" class="card p-3">
+          <img src="/pic/pic1.jpg" alt="intersection" style="width:100%; height:100%; border-radius:12px;">
+        </div>
+
+        <!-- 2D Model View (Cross roads with lights) -->
+        <div id="modelView" class="card p-3" style="display:none;">
+          <div class="intersection">
+            <div class="vertical-road"></div>
+            <div class="horizontal-road"></div>
+            <div class="center"></div>
+
+            <!-- Traffic lights -->
+            <div class="traffic-light north-light" onclick="toggleLight(this)">
+              <div class="bulb red active"></div>
+              <div class="bulb yellow"></div>
+              <div class="bulb green"></div>
+            </div>
+            <div class="traffic-light south-light" onclick="toggleLight(this)">
+              <div class="bulb red active"></div>
+              <div class="bulb yellow"></div>
+              <div class="bulb green"></div>
+            </div>
+            <div class="traffic-light east-light" onclick="toggleLight(this)">
+              <div class="bulb red active"></div>
+              <div class="bulb yellow"></div>
+              <div class="bulb green"></div>
+            </div>
+            <div class="traffic-light west-light" onclick="toggleLight(this)">
+              <div class="bulb red active"></div>
+              <div class="bulb yellow"></div>
+              <div class="bulb green"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
 
   <script>
+    // Auto/Manual toggle
     const modeToggle = document.getElementById("modeToggle");
     const modeLabel = document.getElementById("modeLabel");
-
     modeToggle.addEventListener("change", () => {
       if (modeToggle.checked) {
         modeLabel.textContent = "MANUAL";
-        modeLabel.classList.add("text-danger");
-        modeLabel.classList.remove("text-primary");
+        modeLabel.classList.replace("text-primary","text-danger");
       } else {
         modeLabel.textContent = "AUTO";
-        modeLabel.classList.add("text-primary");
-        modeLabel.classList.remove("text-danger");
+        modeLabel.classList.replace("text-danger","text-primary");
       }
     });
 
-    const signalButtons = document.querySelectorAll(".btn-group button");
+    // View switch
+    const viewToggle = document.getElementById("viewToggle");
+    const imageView = document.getElementById("imageView");
+    const modelView = document.getElementById("modelView");
+    viewToggle.addEventListener("click", () => {
+      if (imageView.style.display !== "none") {
+        imageView.style.display = "none";
+        modelView.style.display = "block";
+        viewToggle.textContent = "Switch to Image View";
+      } else {
+        imageView.style.display = "block";
+        modelView.style.display = "none";
+        viewToggle.textContent = "Switch to 2D Model";
+      }
+    });
 
-    signalButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        signalButtons.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
+    // Toggle traffic light bulbs
+    function toggleLight(lightBox) {
+      const bulbs = lightBox.querySelectorAll(".bulb");
+      bulbs.forEach(b => b.classList.remove("active"));
+      if (lightBox.dataset.state === "red") {
+        bulbs[1].classList.add("active");
+        lightBox.dataset.state = "yellow";
+      } else if (lightBox.dataset.state === "yellow") {
+        bulbs[2].classList.add("active");
+        lightBox.dataset.state = "green";
+      } else {
+        bulbs[0].classList.add("active");
+        lightBox.dataset.state = "red";
+      }
+    }
 
-        const selectedTime = btn.getAttribute("data-time");
-        console.log("Selected duration:", selectedTime + "s");
-      });
+    // Init all lights as red
+    document.querySelectorAll(".traffic-light").forEach(light => {
+      light.dataset.state = "red";
     });
   </script>
 </body>
+
 </html>
